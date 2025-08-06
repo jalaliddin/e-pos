@@ -19,8 +19,12 @@ A simple, open-source **Point of Sale (POS) system** built with Laravel and Fila
 **Username:** admin@admin.com
 
 **Password:** pass@123
+<br>
 
+## ⭐ Show your support!
+If you find this project helpful, please consider giving it a star on GitHub
 
+<br>
 
 ## Installation & Custom Invoice Template Service
 
