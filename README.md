@@ -1,6 +1,7 @@
 <p align="center"><a href="#logo"><img src="https://raw.githubusercontent.com/mailmug/laravel-easy-pos/main/easy-pos-logo.svg" width="400" alt="Laravel POS Logo"></a></p>
 
 A simple, open-source **Point of Sale (POS) system** built with Laravel and FilamentPHP.
+You can also use Laravel Easy POS as a lightweight and effective invoice generator for your services — not just products.
 
 
 ## Features 🛠️
@@ -59,6 +60,32 @@ It supports thermal printing.
 <p align="center">
   <img src="https://raw.githubusercontent.com/mailmug/laravel-easy-pos/main/public/img/invoice.png" alt="POS Invoice" style="border:1px solid #ddd">
 </p> 
+<br>
+<br>
+
+### 🛠️ How to Use as an Invoice Generator
+
+**Install the application**  
+Follow the standard installation process in the setup section.
+
+**Add your services as “products”**  
+For example:
+
+- **Service Name:** Deep Cleaning - 2BHK  
+- **Price:** 499  
+- **Description:** Full deep-clean for 2BHK apartment
+
+**Create a new sale or transaction**
+
+- Go to the POS dashboard  
+- Select the service (like “Deep Cleaning - 2BHK”)  
+- Enter quantity (usually 1)  
+- Add customer info if needed
+
+**Print or download the invoice**
+
+- After checkout, you can **Print** the receipt  
+- Or use **PDF export** if integrated
 
 
 ## Installation Guide 🏗️
