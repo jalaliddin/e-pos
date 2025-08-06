@@ -25,6 +25,11 @@ You can also use Laravel Easy POS as a lightweight and effective invoice generat
 <br>
 <br>
 
+**Demo Service Invoice:** [View Sample Invoice](https://comfort.phpbolt.com/invoice-001.pdf)
+
+<br>
+<br>
+
 ## ⭐ Show your support!
 If you find this project helpful, please consider giving it a star on GitHub
 
