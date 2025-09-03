@@ -3,6 +3,9 @@
 A simple, open-source **Point of Sale (POS) system** built with Laravel and FilamentPHP.
 You can also use Laravel Easy POS as a lightweight and effective invoice generator for your services — not just products.
 
+It is ready with Filament v4. Please check it and feel free to share your feedback at info@mailmug.net
+
+[Version 1.2.0](https://github.com/mailmug/laravel-easy-pos/tree/v1.2.0)
 
 ## Features 🛠️
 - ✅ Easy-to-use POS interface
