@@ -26,6 +26,8 @@ class CustomerResource extends Resource
 
     protected static ?int $navigationSort = 4;
 
+    protected static ?string $navigationLabel = 'Mijozlar';
+
     public static function form(Forms\Form $form): Forms\Form
     {
         return $form

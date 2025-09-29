@@ -83,9 +83,11 @@ class Cart extends Component
 
         foreach ($items as $item) {  
             $product = Product::find( $item->product_id );
+            // dump($product);
 
             $order->items()->create([
                 'name' => $item->name,
+                'income_price' => $product->income_price,
                 'price' => $item->price,
                 'tax' => $item->tax,
                 'quantity' => $item->quantity,

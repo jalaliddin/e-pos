@@ -32,6 +32,8 @@ class ProductResource extends Resource
 
     protected static ?int $navigationSort = 3;
 
+    protected static ?string $navigationLabel = 'Mahsulotlar';
+
     public static function form(Form $form): Form
     {
         return $form
@@ -42,6 +44,9 @@ class ProductResource extends Resource
                     TextInput::make('barcode')
                         ->required()
                         ->unique(Product::class, 'barcode', ignoreRecord: true),
+                    TextInput::make('income_price')
+                        ->numeric()
+                        ->required(),
                     TextInput::make('price')
                         ->numeric()
                         ->required(),
@@ -83,6 +88,7 @@ class ProductResource extends Resource
                                 ->sortable() 
                                 ->width(10)
                                 ->rules(['required', 'integer', 'min:1']),
+                TextColumn::make('income_price')->sortable(),              
                 TextColumn::make('price')->sortable(),              
                 TextColumn::make('created_at')->dateTime()->sortable(),
             ])
@@ -103,6 +109,7 @@ class ProductResource extends Resource
                         ->withColumns([
                             Column::make('name')->heading('Name'),
                             Column::make('barcode')->heading('Barcode'),
+                            Column::make('income_price')->heading('Original Price'),
                             Column::make('price')->heading('Price'),
                             Column::make('tax')->heading('Tax'),
                             Column::make('quantity')->heading('Quantity'),

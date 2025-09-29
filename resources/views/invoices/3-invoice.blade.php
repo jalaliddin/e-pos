@@ -98,20 +98,20 @@
         <h1 class="text-center" style="margin-bottom:0; font-family: 'Courier New', Courier, monospace">
             {{$site_name}}
         </h1>
-        <p style="font-size: 12px;">{{$site_description}}</p>
-        <h2>INVOICE</h2>
-        <p>Invoice Number: #{{ str_pad($invoiceNumber, 6, '0', STR_PAD_LEFT) }}</p>
-        <p>Date: {{ $date }}</p>
-        <p>Time: {{ $time }}</p>
+        <!-- <p style="font-size: 12px;">{{$site_description}}</p> -->
+        <h2>Chek</h2>
+        <p>Chek raqami: #{{ str_pad($invoiceNumber, 6, '0', STR_PAD_LEFT) }}</p>
+        <p>Sana: {{ $date }}</p>
+        <p>Vaqt: {{ $time }}</p>
     </div>
 
     <table>
         <thead>
             <tr>
-                <th>Product</th>
-                <th class="text-center">Rate</th>
-                <th class="text-center p-x-1">QTY</th>
-                <th class="text-right">Amount</th>
+                <th>Mahsulot</th>
+                <th class="text-center">Narxi</th>
+                <th class="text-center p-x-1">Soni</th>
+                <th class="text-right">Miqdor</th>
             </tr>
             <tr>
                 <th class="border-b-d" colspan="4" style="height: 0; padding:0;"></td>
@@ -130,7 +130,7 @@
                     <td  class="pb-1" style="" colspan="4">{{ $i.'.'.$item->product->name}}</td>
                 </tr>
                 <tr>
-                    <td class="pt-0">VAT {{(int)$item['tax']}}%</td>
+                    <td class="pt-0">QQS {{(int)$item['tax']}}%</td>
                     <td class="text-center pt-0">{{ number_format($item['price'], 2, '.', '')  }}</td>
                     <td class="text-center pt-0">{{ $item['quantity'] }}</td>
                     @php 
@@ -151,13 +151,13 @@
 
             <tr>
                 <td class="text-center " colspan="4" style="padding-top:3mm; padding-bottom:0; font-size:16px">
-                    INVOICE SUMMARY
+                    Chek ma'lumoti
                 </td>
             </tr>
 
             <tr>
                 <td class="mt-2" colspan="3" style="font-size:16px;">
-                    Total 
+                    Umumiy 
                 </td>
                 <td class="pt-0" style="text-align: right; font-size:16px">
                     {{$order->total_price}}
@@ -167,7 +167,7 @@
             @foreach ($total_tax as $rate => $amount)
                 <tr>
                     <td  colspan="3" style="font-size:16px; padding-top:0; padding-bottom:0">
-                        VAT/GST @ {{ (int)$rate }}% 
+                        QQS/GST @ {{ (int)$rate }}% 
                     </td>
                     <td class="pt-0 pb-0" class="text-right"  style=" padding-top:0; padding-bottom:0; font-size:16px">
                         {{$amount}}
@@ -179,7 +179,7 @@
             </tr>
             <tr>
                 <td colspan="3" style="font-size:16px">
-                    Grand Total 
+                    To'liq summa 
                 </td>
                 <td class="text-right" style=" font-size:16px">
                     {{ number_format($grand_total, 2) }}
@@ -193,7 +193,7 @@
     </table>
 
     <div class="invoice-footer">
-        <p>Thank you for your purchase!</p>
+        <p>Xaridingiz uchun rahmat</p>
     </div>
 </body>
 </html>

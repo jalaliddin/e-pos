@@ -16,6 +16,8 @@ class Settings extends Page
 
     protected static string $view = 'filament.pages.settings';
 
+    protected static ?string $navigationLabel = 'Sozlamalar';
+
     public array $settings = [];
 
     public function mount(): void
@@ -30,23 +32,23 @@ class Settings extends Page
             Setting::updateOrCreate(['key' => $key], ['value' => $value]);
         }
 
-        session()->flash('success', 'Settings updated successfully!');
+        session()->flash('success', 'Muvaffaqqiyatli');
     }
 
     public function form(Form $form): Form
     {
         return $form->schema([
             TextInput::make('settings.site_name')
-                ->label('Site Name')
+                ->label('Nomi')
                 ->required(),
             TextInput::make('settings.site_email')
                 ->label('Email')
                 ->email(),
             Textarea::make('settings.site_description')
-                ->label('Description'),
+                ->label('Haqida'),
             TextInput::make('settings.currency_symbol')
                 ->default('$')
-                ->label('Currency symbol'),
+                ->label('Valyuta belgisi'),
         ]);
     }
 }

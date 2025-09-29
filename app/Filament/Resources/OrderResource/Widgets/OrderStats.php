@@ -24,13 +24,13 @@ class OrderStats extends BaseWidget
         $currency_symbol = config('settings.currency_symbol');
 
         return [
-            Stat::make('Total orders', $this->getPageTableQuery()->count())
-                    ->description("Total orders")
+            Stat::make('Buyurtmalar', $this->getPageTableQuery()->count())
+                    ->description("Umumiy buyurtmalar")
                     ->descriptionIcon('heroicon-o-inbox-stack', IconPosition::Before)
                     ->chart([1,5,10,50])
                     ->color('success'),
-            Stat::make('Income', $currency_symbol.$this->getPageTableQuery()->sum('total_price'))
-                    ->description("Total income")
+            Stat::make('Foyda', $currency_symbol.$this->getPageTableQuery()->sum('total_price'))
+                    ->description("Umumiy foyda")
                     ->descriptionIcon('heroicon-o-banknotes', IconPosition::Before)
                     ->chart([1,5,30, 50])
                     ->color('success'),

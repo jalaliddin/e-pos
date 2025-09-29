@@ -20,20 +20,20 @@ class SalesOverview extends BaseWidget
         $totalcustomersLast30Days = Customer::where('created_at', '>=', Carbon::now()->subDays(30))->count();
 
         return [
-            Stat::make('Orders Count', $totalOrdersLast30Days)
-                    ->description("Total orders in the last 30 days")
+            Stat::make('Buyurtmalar soni', $totalOrdersLast30Days)
+                    ->description("Oxirgi 30 kun davomida")
                     ->descriptionIcon('heroicon-o-inbox-stack', IconPosition::Before)
                     ->chart([1,5,10,50])
                     ->color('success'),
 
-            Stat::make('Income', $currency_symbol.$totalIncomeLast30Days)
-                    ->description("Total income in the last 30 days")
+            Stat::make('Kirimlar', $currency_symbol.$totalIncomeLast30Days)
+                    ->description("Oxirgi 30 kun davomidagi kirimlar")
                     ->descriptionIcon('heroicon-o-banknotes', IconPosition::Before)
                     ->chart([1,5,30, 50])
                     ->color('success'),
             
-            Stat::make('Customers Count', $totalcustomersLast30Days)
-                    ->description("Last 30 days customers count")
+            Stat::make('Mijozlar soni', $totalcustomersLast30Days)
+                    ->description("Oxirgi 30 kun davomidagi mijozlar")
                     ->descriptionIcon('heroicon-o-user-group', IconPosition::Before)
                     ->chart([1,5,15, 25])
                     ->color('success'),       

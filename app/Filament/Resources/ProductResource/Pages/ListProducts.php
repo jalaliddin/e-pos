@@ -57,10 +57,11 @@ class ListProducts extends ListRecords
                     ->withFilename(fn ($resource) => $resource::getModelLabel() . '-' . date('Y-m-d'))
                     ->withWriterType(\Maatwebsite\Excel\Excel::CSV)
                     ->withColumns([
-                        Column::make('name')->heading('Name'),
-                        Column::make('barcode')->heading('Barcode'),
-                        Column::make('price')->heading('Price'),
-                        Column::make('quantity')->heading('Quantity'),
+                        Column::make('name')->heading('Nomi'),
+                        Column::make('barcode')->heading('Shtrix kod'),
+                        Column::make('income_price')->heading('Asl narxi'),
+                        Column::make('price')->heading('Narxi'),
+                        Column::make('quantity')->heading('Soni'),
                     ])
             ]),
             Actions\CreateAction::make()->color('success'),

@@ -3,12 +3,15 @@
 namespace App\Filament\Resources\OrderResource\Pages;
 
 use App\Filament\Resources\OrderResource;
+use App\Models\Order;
 use Filament\Actions;
 use Filament\Pages\Concerns\ExposesTableToWidgets;
 use Filament\Resources\Pages\ListRecords;
 use pxlrbt\FilamentExcel\Actions\Pages\ExportAction;
 use pxlrbt\FilamentExcel\Exports\ExcelExport;
 use pxlrbt\FilamentExcel\Columns\Column;
+use App\Models\OrderItem;
+
 
 class ListOrders extends ListRecords
 {
@@ -21,22 +24,34 @@ class ListOrders extends ListRecords
 
         return [
             Actions\CreateAction::make(),
-            ExportAction::make() 
-            ->exports([
+
+            // ExportAction::make('export_order') 
+            //         ->label('Order')
+
+            // ->exports([
+            //     ExcelExport::make()
+            //         ->fromModel(Order::class)
+            //         ->withFilename('order-' . date('Y-m-d'))
+            //         ->withWriterType(\Maatwebsite\Excel\Excel::CSV)
+            // ]),
+
+            ExportAction::make('export_order') 
+            ->label('Excel')
+            ->exports(exports: [
                 ExcelExport::make()
-                    ->fromTable()
-                    ->withFilename(fn ($resource) => $resource::getModelLabel() . '-' . date('Y-m-d'))
+                    ->fromModel(Order::class)
+                    ->withFilename('order-items-' . date('Y-m-d'))
                     ->withWriterType(\Maatwebsite\Excel\Excel::CSV)
-                    ->withColumns([
-                        Column::make('customer.phone')->heading('Mobile'),
-                        Column::make('customer.email')->heading('Email'),
-                        Column::make('customer.address')->heading('Address'),
-                        Column::make('updated_at'),
-                    ])
-            ]),  
+            ]),   
         ];
     }
-
+        // 'name',
+        // 'income_price',
+        // 'price',
+        // 'tax',
+        // 'quantity',
+        // 'product_id',
+        // 'order_id'
     protected function getWidgets(): array
     {
         return [
