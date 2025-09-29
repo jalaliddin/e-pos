@@ -62,6 +62,7 @@ class Cart extends Component
     public function checkout(){
         
         $total_price = 0;
+        $income_price = 0;
         $customerId =  session('customer_id');
 
         if( empty($customerId) ){
@@ -76,7 +77,8 @@ class Cart extends Component
 
         $order = Order::create([
             'customer_id' => $customerId,
-            'total_price' => $total_price
+            'total_price' => $total_price,
+            'income_price' => $income_price
         ]);
 
         
@@ -92,13 +94,16 @@ class Cart extends Component
                 'tax' => $item->tax,
                 'quantity' => $item->quantity,
                 'product_id' => $item->product_id,
+                'category_name' => $product->category->name,
             ]);
             $total_price += $item->quantity * $item->price;
+            $income_price += $item->quantity * $product->income_price;
             $product->quantity = $product->quantity - $item->quantity;
             $product->save();
         }
         
         $order->total_price = $total_price;
+        $order->income_price = $income_price;
         $order->save();
 
         $this->cartItems = CartModel::where('user_id', auth()->user()->id)

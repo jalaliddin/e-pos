@@ -31,5 +31,10 @@ class Product extends Model
         }
         return asset('img/img-placeholder.jpg');
     }
+    public function category()
+{
+    return $this->belongsTo(Category::class);
+}
+
 
 }

@@ -3,19 +3,17 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\OrderItemResource\Pages;
-use App\Filament\Resources\OrderItemResource\RelationManagers;
 use App\Models\OrderItem;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class OrderItemResource extends Resource
 {
     protected static ?string $model = OrderItem::class;
+
     protected static ?string $navigationLabel = 'Sotilgan mahsulotlar';
 
     protected static ?string $pluralLabel = 'Sotilgan mahsulotlar';
@@ -58,31 +56,27 @@ class OrderItemResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('price')
-                ->label('Narxi')
-                    ->money()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('quantity')
-                ->label('Soni')
-                    ->numeric()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('order_id')
-                ->label('Buyurtma raqami')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('product_id')
-                ->label('Mahsulot raqami')
+                    ->label('Buyurtma raqami')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('name')
-                ->label('Nomi')
+                    ->label('Nomi')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('tax')
-                ->label('QQS')
+                Tables\Columns\TextColumn::make('quantity')
+                    ->label('Soni')
                     ->numeric()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('price')
+                    ->label('Narxi')
+                    ->money()
+                    ->sortable(),
+                // Tables\Columns\TextColumn::make('tax')
+                // ->label('QQS')
+                //     ->numeric()
+                //     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
-                ->label('Yaratilgan sana')
+                    ->label('Yaratilgan sana')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -90,10 +84,13 @@ class OrderItemResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('income_price')
-                    ->label('Asl narxi')
-                    ->numeric()
-                    ->sortable(),
+                // Tables\Columns\TextColumn::make('income_price')
+                //     ->label('Asl narxi')
+                //     ->numeric()
+                //     ->sortable(),
+                Tables\Columns\TextColumn::make('category_name')
+                    ->label('Kategoriya')
+                    ->searchable(),
             ])
             ->filters([
                 //

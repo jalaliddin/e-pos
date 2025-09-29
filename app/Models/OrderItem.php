@@ -14,7 +14,8 @@ class OrderItem extends Model
         'tax',
         'quantity',
         'product_id',
-        'order_id'
+        'order_id',
+        'category_name'
     ];
 // public function getIncomePriceAttribute($value)
 // {

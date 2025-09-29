@@ -46,10 +46,13 @@ class Cart extends Component
         $order = Order::find($this->orderId);
         
         $total_price = 0;
+        $income_price = 0;
         foreach($this->cartItems as $item){ 
             $total_price += $item->quantity * $item->price;
+            $income_price += $item->quantity * $item->income_price;
         }
         $order->total_price = $total_price;
+        $order->income_price = $income_price;
         $order->save();
 
     }
@@ -65,10 +68,13 @@ class Cart extends Component
         $order = Order::find($this->orderId);
 
         $total_price = 0;
+        $income_price = 0;
         foreach($this->cartItems as $item){ 
             $total_price += $item->quantity * $item->price;
+            $income_price += $item->quantity * $item->income_price;
         }
         $order->total_price = $total_price;
+        $order->income_price = $income_price;
         $order->save();
                                 
     }
