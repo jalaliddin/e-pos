@@ -87,7 +87,6 @@ class ProductResource extends Resource
                     ->sortable()
                     ->width(10)
                     ->rules(['required', 'integer', 'min:1']),
-                TextColumn::make('income_price')->sortable(),
                 TextColumn::make('price')->sortable(),
                 TextColumn::make('category.name')
                     ->label('Category'),

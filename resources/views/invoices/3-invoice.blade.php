@@ -59,8 +59,8 @@
         }
         .invoice-footer {
             text-align: center;
-            font-size: 10px;
-            margin-top: 10mm;
+            font-size: 16px;
+            margin-top: 5mm;
         }
         .text-center{
             text-align: center
@@ -191,7 +191,6 @@
             
         </tbody>
     </table>
-
     <div class="invoice-footer">
         <p>Xaridingiz uchun rahmat</p>
     </div>

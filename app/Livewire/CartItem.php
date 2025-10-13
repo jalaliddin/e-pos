@@ -13,16 +13,19 @@ class CartItem extends Component
     public $currency_symbol;
 
     public $quantity;
+    public $price;
 
     public function mount($cartItem)
     {
         $this->cartItem = $cartItem;
         $this->quantity = $cartItem->quantity;
+        $this->price = $cartItem->price;
     }
 
     #[On('cartUpdated')]
     public function cartUpdated(){
         $this->quantity = $this->cartItem->quantity;
+        $this->price = $this->cartItem->price;
     }
 
     public function removeFromCart()
@@ -39,6 +42,7 @@ class CartItem extends Component
                 $this->quantity = $product->quantity;
             }
             $this->cartItem->quantity = $this->quantity;
+            $this->cartItem->price = $this->price;
             $this->cartItem->save();
             $this->dispatch('cartUpdatedFromItem');
         } 
