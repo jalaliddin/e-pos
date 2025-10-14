@@ -18,12 +18,6 @@ class CustomerSearch extends Component
             $this->selectedCustomer = Customer::find( $customerId );
             $this->query = '-';  
         }
-        if (!$this->selectedCustomer) {
-            $this->selectedCustomer = Customer::where('first_name','like', "Ko'chadan")->first();
-        }
-        if ($this->selectedCustomer) {
-            $this->query = $this->selectedCustomer->first_name;
-        }
     }
 
     public function updatedQuery()

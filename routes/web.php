@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BarcodePrintController;
 use App\Http\Controllers\UtilityController;
 use App\Http\Controllers\InstallController;
 use Illuminate\Support\Facades\Route;
@@ -35,3 +36,8 @@ Route::get('/clear',  function(){
     Artisan::call('route:clear');
     Artisan::call('view:clear');
 });
+Route::get('/barcode/print/{product}', [BarcodePrintController::class, 'print'])
+    ->name('barcode.print');
+
+Route::get('/barcode/print-bulk/{ids}', [BarcodePrintController::class, 'printBulk'])
+    ->name('barcode.bulk.print');

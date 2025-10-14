@@ -19,10 +19,10 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->string('image')->nullable();
             $table->string('barcode')->unique();
-            $table->decimal('regular_price', 8, 2)->nullable();
-            $table->decimal('price', 8, 2);
+            $table->decimal('regular_price', 15, 2)->nullable();
+            $table->decimal('price', 15, 2);
             $table->integer('quantity')->default('1');
-            $table->decimal('tax', 8, 2)->default('0.00');
+            $table->decimal('tax', 15, 2)->default('0.00');
             $table->boolean('is_custom_product')->default(false);
             $table->boolean('status')->default(true);
             $table->timestamps();

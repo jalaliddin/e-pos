@@ -14,10 +14,15 @@ use Filament\Tables;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\TextInputColumn;
+use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Table;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 use pxlrbt\FilamentExcel\Columns\Column;
 use pxlrbt\FilamentExcel\Exports\ExcelExport;
+use Milon\Barcode\DNS1D;
+use Filament\Tables\Actions\Action;
+use Filament\Tables\Actions\BulkAction;
+use Illuminate\Database\Eloquent\Collection;
 
 class ProductResource extends Resource
 {
@@ -97,6 +102,12 @@ class ProductResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                            Tables\Actions\ViewAction::make(),
+            Action::make('print_barcode')
+                ->label('Print Barcode')
+                ->icon('heroicon-o-printer')
+                ->url(fn ($record) => route('barcode.print', $record))
+                ->openUrlInNewTab(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -115,6 +126,14 @@ class ProductResource extends Resource
                             Column::make('quantity')->heading('Quantity'),
                         ]),
                 ]),
+                            BulkAction::make('print_barcodes')
+                ->label('Barcode chiqarish')
+                ->icon('heroicon-o-printer')
+                ->action(function (Collection $records, $data, $livewire) {
+                    // Tanlangan ID'larni URL orqali yuboramiz
+                    $ids = $records->pluck('id')->join(',');
+                    return redirect()->route('barcode.bulk.print', ['ids' => $ids]);
+                }),
             ]);
     }
 

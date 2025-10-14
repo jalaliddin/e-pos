@@ -111,8 +111,8 @@ class Cart extends Component
 
         $this->dispatch('checkout-completed');
 
-        // redirect( url('/admin/orders/'. $order->id .'/edit') );
-        redirect( url('/admin/pos') );
+        redirect( url('/admin/orders/'. $order->id .'/edit') );
+        // redirect( url('/admin/pos') );
 
     }
 

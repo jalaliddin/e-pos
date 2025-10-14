@@ -16,7 +16,7 @@
             </thead>
             <tbody>
             @if ( !is_countable($cartItems) || count($cartItems) < 1)
-                <tr class="min-h-32"><td class="p-4">Qo'shish</td></tr>
+                <tr class="min-h-32"><td class="p-4">Bo'sh</td></tr>
             @else
                 @php 
                     $total_price = 0;
@@ -38,19 +38,19 @@
                 @endforeach
                 
                 <tr class="border-gray-400 border">
-                    <td colspan="3" class="px-4 py-2 border-r text-right font-semibold">Subtotal</td>
+                    <td colspan="3" class="px-4 py-2 border-r text-right font-semibold">QQS siz</td>
                     <td colspan="2" class="px-4 py-2 text-center font-semibold">{{ $currency_symbol }}{{ number_format($total_price, 2) }}</td>
                 </tr>
 
                 @foreach ($total_tax as $rate => $amount)
                     <tr class="border-gray-400 border">
-                        <td colspan="3" class="px-4 py-2 border-r text-right font-semibold">VAT/GST @ {{ $rate }}%</td>
+                        <td colspan="3" class="px-4 py-2 border-r text-right font-semibold">QQS @ {{ $rate }}%</td>
                         <td colspan="2" class="px-4 py-2 text-center font-semibold">{{ $currency_symbol }}{{ number_format($amount, 2) }}</td>
                     </tr>
                 @endforeach
 
-                <tr class="bg-gray-100 border-gray-400 border">
-                    <td colspan="3" class="px-4 py-2 border-r text-right font-bold">Grand Total</td>
+                <tr class="bg-gray border-gray-400 border">
+                    <td colspan="3" class="px-4 py-2 border-r text-right font-bold">Umumiy</td>
                     <td colspan="2" class="px-4 py-2 text-center font-bold">{{ $currency_symbol }}{{ number_format($grand_total, 2) }}</td>
                 </tr>
  
