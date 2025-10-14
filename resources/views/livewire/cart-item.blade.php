@@ -20,7 +20,7 @@
             </div>
         </td>
         @php
-            $item_total = $this->price * $cartItem->quantity;
+            $item_total = $cartItem->price * $cartItem->quantity;
             $tax_amount = ($item_total * $cartItem->tax) / 100;
             $item_total_with_tax = $item_total + $tax_amount;
         @endphp

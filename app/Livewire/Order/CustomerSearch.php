@@ -8,7 +8,7 @@ use Livewire\Component;
 
 class CustomerSearch extends Component
 {
-    public $query = '';  
+    public $query = 'z';  
     public $customers = [];
     public $selectedCustomer = null;
     public $showDropdown = false;  

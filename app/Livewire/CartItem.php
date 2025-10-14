@@ -36,7 +36,7 @@ class CartItem extends Component
     }
 
     public function updated(){
-        if ($this->quantity > 0) {  
+        if ($this->quantity > 0 && $this->price >=0) {  
             $product = Product::find( $this->cartItem->product_id );
             if( $product->quantity <  $this->quantity ){  
                 $this->quantity = $product->quantity;
