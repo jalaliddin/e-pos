@@ -94,7 +94,7 @@ class Cart extends Component
                 'tax' => $item->tax,
                 'quantity' => $item->quantity,
                 'product_id' => $item->product_id,
-                'category_name' => $product->category->name,
+                'category_name' => $product->category->name ?? 'kategoriyasiz',
             ]);
             $total_price += $item->quantity * $item->price;
             $income_price += $item->quantity * $product->income_price;
