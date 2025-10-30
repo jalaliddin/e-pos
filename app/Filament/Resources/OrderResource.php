@@ -8,6 +8,8 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\Summarizers\Sum;
+use Filament\Tables\Columns\Summarizers\Summarizer;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
@@ -48,7 +50,41 @@ class OrderResource extends Resource
                     ->formatStateUsing(fn ($record) => $record->customer->first_name.' '.$record->customer->last_name),
                 TextColumn::make('total_price')
                     ->label('Umumiy narxi')
-                    ->formatStateUsing(fn ($record) => $currency_symbol.$record->total_price)->sortable(),
+                    ->sortable()
+                    ->formatStateUsing(fn ($record) => $currency_symbol.number_format($record->total_price, 0, ',', ' '))
+                    ->summarize(
+                        Sum::make()
+                            ->label('Jami')
+                            ->query(fn ($query) => $query)
+                            ->formatStateUsing(fn ($state) => $currency_symbol.number_format($state, 0, ',', ' '))
+                    ),
+                TextColumn::make('income_price')
+                    ->label('Asl narxi')
+                    ->sortable()
+                    ->formatStateUsing(fn ($record) => $currency_symbol.number_format($record->income_price, 0, ',', ' '))
+                    ->summarize(
+                        Sum::make()
+                            ->label('Jami')
+                            ->query(fn ($query) => $query)
+                            ->formatStateUsing(fn ($state) => $currency_symbol.number_format($state, 0, ',', ' '))
+                    ),
+                TextColumn::make('profit')
+                    ->label('Foyda')
+                    ->state(fn ($record) => $record->total_price - $record->income_price)
+                    ->formatStateUsing(fn ($state) => number_format($state, 0, ',', ' ').' so‘m')
+                    ->summarize([
+                        Summarizer::make()
+                            ->label('Foyda jami')
+                            ->using(function ($query) {
+                                // Bu yerda barcha filterlar hisobga olinadi
+                                $total = $query->sum('total_price');
+                                $income = $query->sum('income_price');
+
+                                return $total - $income;
+                            })
+                            ->formatStateUsing(fn ($state) => '🟢 '.number_format($state, 0, ',', ' ').' so‘m'
+                            ),
+                    ]),
                 TextColumn::make('created_at')->sortable()->dateTime()->label('Yaratilgan sana'),
             ])
             ->defaultSort('id', 'desc')
