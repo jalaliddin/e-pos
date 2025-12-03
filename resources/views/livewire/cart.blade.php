@@ -58,15 +58,28 @@
             </tbody>
         </table>
     </div>
-    <button wire:click="checkout" wire:loading.attr="disabled"  class="w-full bg-green-500 hover:bg-green-600 text-white text-lg font-semibold py-3 rounded-lg shadow-md mt-3 transition duration-200">
-        <span wire:loading.remove wire:target='checkout'>Sotish</span>
-        <span wire:loading wire:target='checkout' class="w-4 h-4 border-2 border-t-red-100 border-transparent rounded-full animate-spin"></span>
+    <div class="grid grid-cols-2 gap-4 mt-3">
+<button wire:click="checkoutandprint"
+        wire:loading.attr="disabled"
+        class="w-full bg-red-500 hover:bg-green-600 text-white text-xl font-semibold py-12 rounded-lg shadow-lg transition duration-200">
+        
+        <span wire:loading.remove wire:target="checkoutandprint">Chek bilan sotish</span>
+        <span wire:loading wire:target="checkoutandprint"
+            class="mx-auto w-6 h-6 border-4 border-t-white border-transparent rounded-full animate-spin"></span>
     </button>
-    <br>
-    <button wire:click="checkoutandprint" wire:loading.attr="disabled"  class="w-full bg-green-500 hover:bg-green-600 text-white text-lg font-semibold py-3 rounded-lg shadow-md mt-3 transition duration-200">
-        <span wire:loading.remove wire:target='checkoutandprint'>Chek bilan sotish</span>
-        <span wire:loading wire:target='checkoutandprint' class="w-4 h-4 border-2 border-t-red-100 border-transparent rounded-full animate-spin"></span>
+    
+    <button wire:click="checkout"
+        wire:loading.attr="disabled"
+        class="w-full bg-green-500 hover:bg-green-600 text-white text-xl font-semibold py-12 rounded-lg shadow-lg transition duration-200">
+        
+        <span wire:loading.remove wire:target="checkout">Sotish</span>
+        <span wire:loading wire:target="checkout"
+            class="mx-auto w-6 h-6 border-4 border-t-white border-transparent rounded-full animate-spin"></span>
     </button>
+
+    
+
+</div>
 </div>
 <script>
     document.addEventListener('window-print', e => {

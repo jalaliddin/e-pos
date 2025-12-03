@@ -9,13 +9,15 @@ class OrderObserver
 {
     public function updated(Order $order)
     {
-        // dd($order);
+
+        $total_price = number_format($order->total_price,0,',',' ');
+        $income_price = number_format($order->income_price,0,',',' ');
         $message = "🛒 *Yangi buyurtma:*\n";
         $message .= "🆔 *Buyurtma ID:* {$order->id}\n";
         $message .= "👤 *Mijoz:* {$order->customer->first_name}\n";
-        $message .= "💰 *Narxi:* {$order->total_price} so'm\n";
-        $message .= "🏷️ *Asl narxi:* {$order->income_price} so'm\n";
-        $revenue = $order->total_price - $order->income_price;
+        $message .= "💰 *Narxi:* {$total_price} so'm\n";
+        $message .= "🏷️ *Asl narxi:* {$income_price} so'm\n";
+        $revenue = number_format($order->total_price - $order->income_price,0,',',' ');
         $message .= "📈 *Foyda:* {$revenue} so'm\n";
 
 

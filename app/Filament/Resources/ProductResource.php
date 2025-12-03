@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProductResource\Pages;
+use App\Models\Category;
 use App\Models\Product;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
@@ -22,6 +23,9 @@ use pxlrbt\FilamentExcel\Exports\ExcelExport;
 use Milon\Barcode\DNS1D;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\BulkAction;
+use Filament\Tables\Columns\Summarizers\Sum;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Collection;
 
 class ProductResource extends Resource
@@ -43,7 +47,7 @@ class ProductResource extends Resource
                     ->maxLength(255),
                 TextInput::make('barcode')
                     ->required()
-                    ->default(rand(100,10000))
+                    ->default(rand(100, 10000))
                     ->unique(Product::class, 'barcode', ignoreRecord: true),
                 TextInput::make('income_price')
                     ->numeric()
@@ -78,6 +82,8 @@ class ProductResource extends Resource
 
     public static function table(Table $table): Table
     {
+        $currency_symbol = config('settings.currency_symbol');
+
         return $table
             ->columns([
                 TextColumn::make('name')
@@ -95,20 +101,34 @@ class ProductResource extends Resource
                     ->rules(['required', 'integer', 'min:1']),
                 TextColumn::make('price')->sortable(),
                 TextColumn::make('category.name')
-                    ->label('Category'),
+                    ->label('Category')
+                    ->sortable(),
                 TextColumn::make('created_at')->dateTime()->sortable(),
+                TextColumn::make('price')
+                    ->label('Umumiy narxi')
+                    ->sortable()
+                    ->formatStateUsing(fn ($record) => $currency_symbol.number_format($record->price, 0, ',', ' '))
+                    ->summarize(
+                        Sum::make()
+                            ->label('Jami')
+                            ->query(fn ($query) => $query)
+                            ->formatStateUsing(fn ($state) => $currency_symbol.number_format($state, 0, ',', ' '))
+                    ),
             ])
             ->filters([
-                //
+                SelectFilter::make('category_id')
+                    ->label('Kategoriya')
+                    ->options(Category::all()->pluck('name', 'id'))
+                    ->searchable()
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                            Tables\Actions\ViewAction::make(),
-            Action::make('print_barcode')
-                ->label('Print Barcode')
-                ->icon('heroicon-o-printer')
-                ->url(fn ($record) => route('barcode.print', $record))
-                ->openUrlInNewTab(),
+                Tables\Actions\ViewAction::make(),
+                Action::make('print_barcode')
+                    ->label('Print Barcode')
+                    ->icon('heroicon-o-printer')
+                    ->url(fn($record) => route('barcode.print', $record))
+                    ->openUrlInNewTab(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -116,7 +136,7 @@ class ProductResource extends Resource
                 ]),
                 ExportBulkAction::make()->exports([
                     ExcelExport::make()
-                        ->withFilename(fn ($resource) => $resource::getModelLabel().'-'.date('Y-m-d'))
+                        ->withFilename(fn($resource) => $resource::getModelLabel() . '-' . date('Y-m-d'))
                         ->withWriterType(\Maatwebsite\Excel\Excel::CSV)
                         ->withColumns([
                             Column::make('name')->heading('Name'),
@@ -127,14 +147,14 @@ class ProductResource extends Resource
                             Column::make('quantity')->heading('Quantity'),
                         ]),
                 ]),
-                            BulkAction::make('print_barcodes')
-                ->label('Barcode chiqarish')
-                ->icon('heroicon-o-printer')
-                ->action(function (Collection $records, $data, $livewire) {
-                    // Tanlangan ID'larni URL orqali yuboramiz
-                    $ids = $records->pluck('id')->join(',');
-                    return redirect()->route('barcode.bulk.print', ['ids' => $ids]);
-                }),
+                BulkAction::make('print_barcodes')
+                    ->label('Barcode chiqarish')
+                    ->icon('heroicon-o-printer')
+                    ->action(function (Collection $records, $data, $livewire) {
+                        // Tanlangan ID'larni URL orqali yuboramiz
+                        $ids = $records->pluck('id')->join(',');
+                        return redirect()->route('barcode.bulk.print', ['ids' => $ids]);
+                    }),
             ]);
     }
 

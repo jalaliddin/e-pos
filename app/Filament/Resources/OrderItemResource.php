@@ -77,7 +77,7 @@ class OrderItemResource extends Resource
                     ->label('Narxi')
                     ->money()
                     ->sortable()
-                    ->formatStateUsing(fn ($record) => $currency_symbol.number_format($record->income_price, 0, ',', ' '))
+                    ->formatStateUsing(fn ($record) => $currency_symbol.number_format($record->price, 0, ',', ' '))
                     ->summarize(
                         Sum::make()
                             ->label('Jami')
@@ -101,6 +101,7 @@ class OrderItemResource extends Resource
                     ->label('Asl narxi')
                     ->numeric()
                     ->sortable()
+                    ->visible(fn () => auth()->user()->hasRole('super_admin'))
                     ->formatStateUsing(fn ($record) => $currency_symbol.number_format($record->income_price, 0, ',', ' '))
                     ->summarize(
                         Sum::make()
@@ -110,8 +111,9 @@ class OrderItemResource extends Resource
                     ),
                 TextColumn::make('profit')
                     ->label('Foyda')
-                    ->state(fn ($record) => $record->total_price - $record->income_price)
+                    ->state(fn ($record) => $record->price - $record->income_price)
                     ->formatStateUsing(fn ($state) => number_format($state, 0, ',', ' ').' so‘m')
+                    ->visible(fn () => auth()->user()->hasRole('super_admin'))
                     ->summarize([
                         Summarizer::make()
                             ->label('Foyda jami')

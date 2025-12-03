@@ -61,6 +61,7 @@ class OrderResource extends Resource
                 TextColumn::make('income_price')
                     ->label('Asl narxi')
                     ->sortable()
+                    ->visible(fn () => auth()->user()->hasRole('super_admin'))
                     ->formatStateUsing(fn ($record) => $currency_symbol.number_format($record->income_price, 0, ',', ' '))
                     ->summarize(
                         Sum::make()
@@ -70,6 +71,8 @@ class OrderResource extends Resource
                     ),
                 TextColumn::make('profit')
                     ->label('Foyda')
+                    ->sortable()
+                    ->visible(fn () => auth()->user()->hasRole('super_admin'))
                     ->state(fn ($record) => $record->total_price - $record->income_price)
                     ->formatStateUsing(fn ($state) => number_format($state, 0, ',', ' ').' so‘m')
                     ->summarize([
