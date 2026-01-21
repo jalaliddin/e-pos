@@ -75,15 +75,17 @@ class BotController extends Controller
                     //     'status'         => 'completed'
                     // ]);
                     
-                    // $staffIdentifier = "TG." . $chatId . "." . $firstName;
+                    $staffIdentifier = "TG." . $chatId . "." . $firstName;
                     
                     $customer = Customer::create([
                         'first_name' => $session->customer_name,
-                        'last_name' => 'staffIdentifier',
+                        'last_name' => $staffIdentifier,
                         'phone' => $session->customer_phone
                     ]);
 
-                    $order = OrderCart::botCheckout($session->product_id, $customer->id, $text);
+                    $orderCart = new OrderCart();
+
+                    $order = $orderCart->botCheckout($session->product_id, $customer->id, $text);
 
                     $session->update(['step' => 'start']); // Sessiyani tozalash
 
