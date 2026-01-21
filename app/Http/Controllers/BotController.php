@@ -7,10 +7,8 @@ use Telegram\Bot\Laravel\Facades\Telegram;
 use App\Models\Category;
 use App\Models\Customer;
 use App\Models\Product;
-use App\Models\Order;
 use App\Models\TelegramSession;
 use Illuminate\Http\Request;
-// use App\Models\Cart;
 
 class BotController extends Controller
 {
