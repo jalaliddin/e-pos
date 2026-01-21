@@ -25,7 +25,7 @@ class OrderObserver
             $message .= "🔹 {$productName} — {$item->quantity} dona x " . number_format($item->price) . " so'm\n";
         }
         $message .= "---------------------------\n";
-        $message .= "👤 *Mijoz:* {$order->customer->first_name}\n";
+        $message .= "👤 *Mijoz:* {$order->customer->first_name} {$order->customer->phone}\n";
         $message .= "💰 *Narxi:* {$total_price} so'm\n";
         $message .= "🏷️ *Asl narxi:* {$income_price} so'm\n";
         $revenue = number_format($order->total_price - $order->income_price, 0, ',', ' ');
