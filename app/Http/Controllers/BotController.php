@@ -16,8 +16,8 @@ class BotController extends Controller
     {
         $update = Telegram::getWebhookUpdate();
         $chatId = $update->getChat()->getId();
-        $firstName = null;
-        $firstName = $update->getMessage()->getFrom()?->getFirstName() ?? '';
+        // $firstName = null;
+        // $firstName = $update->getMessage()->getFrom()?->getFirstName() ?? '';
         // $firstName = $update->getFrom()->getFirstName();
 
         // 1. Faqat xodimlarga ruxsat
@@ -75,11 +75,11 @@ class BotController extends Controller
                     //     'status'         => 'completed'
                     // ]);
                     
-                    $staffIdentifier = "TG." . $chatId . "." . $firstName;
+                    $staffIdentifier = "TG:" . $chatId;
                     
                     $customer = Customer::create([
                         'first_name' => $session->customer_name,
-                        'last_name' => $staffIdentifier,
+                        'last_name' => $chatId,
                         'phone' => $session->customer_phone
                     ]);
 
