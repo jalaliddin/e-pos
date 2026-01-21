@@ -16,7 +16,9 @@ class BotController extends Controller
     {
         $update = Telegram::getWebhookUpdate();
         $chatId = $update->getChat()->getId();
-        $firstName = $update->getFrom()->getFirstName();
+        $firstName = null;
+        $firstName = $update->getMessage()->getFrom()?->getFirstName() ?? '';
+        // $firstName = $update->getFrom()->getFirstName();
 
         // 1. Faqat xodimlarga ruxsat
         $allowedStaff = explode(',', env('ALLOWED_STAFF_IDS'));
