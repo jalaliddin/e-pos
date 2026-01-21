@@ -75,11 +75,11 @@ class BotController extends Controller
                     //     'status'         => 'completed'
                     // ]);
                     
-                    $staffIdentifier = "TG." . $chatId . "." . $firstName;
+                    // $staffIdentifier = "TG." . $chatId . "." . $firstName;
                     
                     $customer = Customer::create([
                         'first_name' => $session->customer_name,
-                        'last_name' => $staffIdentifier,
+                        'last_name' => 'staffIdentifier',
                         'phone' => $session->customer_phone
                     ]);
 
