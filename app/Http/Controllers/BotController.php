@@ -74,12 +74,12 @@ class BotController extends Controller
                     //     'amount'         => $text,
                     //     'status'         => 'completed'
                     // ]);
-
-                    $staffIdentifier = "TG." . $chatId . "." . $firstName;
+                    
+                    // $staffIdentifier = "TG." . $chatId . "." . $firstName;
                     
                     $customer = Customer::create([
                         'first_name' => $session->customer_name,
-                        'last_name' => $staffIdentifier,
+                        'last_name' => 'staffIdentifier',
                         'phone' => $session->customer_phone
                     ]);
 
@@ -87,10 +87,11 @@ class BotController extends Controller
 
                     $session->update(['step' => 'start']); // Sessiyani tozalash
 
-                    return Telegram::sendMessage([
+                    Telegram::sendMessage([
                         'chat_id' => $chatId,
                         'text' => "✅ Order Complete!\nID: #{$order->id}\nMijoz: {$customer->first_name}\nSumma: " . number_format($text) . " so'm\n\nYangi order uchun /start bosing."
                     ]);
+                    return response()->json('success',200);
             }
         }
     }
