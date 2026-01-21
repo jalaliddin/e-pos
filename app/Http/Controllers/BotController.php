@@ -16,7 +16,7 @@ class BotController extends Controller
     {
         $update = Telegram::getWebhookUpdate();
         $chatId = $update->getChat()->getId();
-        $firstName = $update->getMessage()->getFrom()->getFirstName();
+        $firstName = $update->getFrom()->getFirstName();
 
         // 1. Faqat xodimlarga ruxsat
         $allowedStaff = explode(',', env('ALLOWED_STAFF_IDS'));
@@ -73,11 +73,11 @@ class BotController extends Controller
                     //     'status'         => 'completed'
                     // ]);
                     
-                    // $staffIdentifier = "TG." . $chatId . "." . $firstName;
+                    $staffIdentifier = "TG." . $chatId . "." . $firstName;
                     
                     $customer = Customer::create([
                         'first_name' => $session->customer_name,
-                        'last_name' => 'staffIdentifier',
+                        'last_name' => $staffIdentifier,
                         'phone' => $session->customer_phone
                     ]);
 
@@ -105,11 +105,13 @@ class BotController extends Controller
 
     private function sendProducts($chatId, $catId)
     {
-        $products = Product::where('category_id', $catId)->get();
+        $products = Product::where('category_id', $catId)
+        ->where('quantity', '>', 0)
+        ->get();
         if ($products->isEmpty()) {
             return Telegram::sendMessage(['chat_id' => $chatId, 'text' => "Bu kategoriyada tovar yo'q."]);
         }
-        $buttons = $products->map(fn($p) => [['text' => "📦 " . $p->name, 'callback_data' => 'prod_' . $p->id]])->toArray();
+        $buttons = $products->map(fn($p) => [['text' => "📦 " . $p->name . ' - ' . $p->quantity . ' ta', 'callback_data' => 'prod_' . $p->id]])->toArray();
         return Telegram::sendMessage(['chat_id' => $chatId, 'text' => "Mahsulotni tanlang:", 'reply_markup' => json_encode(['inline_keyboard' => $buttons])]);
     }
 }
