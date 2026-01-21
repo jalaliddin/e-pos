@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Livewire\Order\Cart as OrderCart;
+use App\Livewire\Cart;
 use Telegram\Bot\Laravel\Facades\Telegram;
 use App\Models\Category;
 use App\Models\Customer;
@@ -83,7 +83,7 @@ class BotController extends Controller
                         'phone' => $session->customer_phone
                     ]);
 
-                    $orderCart = new OrderCart();
+                    $orderCart = new Cart();
 
                     $order = $orderCart->botCheckout($session->product_id, $customer->id, $text);
 
