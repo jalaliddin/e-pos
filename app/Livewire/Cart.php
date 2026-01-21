@@ -110,6 +110,62 @@ class Cart extends Component
 
     }
 
+    public function botCheckout($botProductid, $botCustomerid, $amount)  
+    {
+
+        $total_price = 0;
+        $income_price = 0;
+        // $customerId = session('customer_id');
+
+        // if (empty($botCustomerId)) {
+        //     return $this->dispatch('error', error: 'Please select customer!');
+        // }
+
+        // $items = $this->cartItems;
+
+        // if (! is_countable($items) || count($items) < 1) {
+        //     return;
+        // }
+
+        $order = Order::create([
+            'customer_id' => $botCustomerid,
+            'total_price' => $total_price
+        ]);
+
+            $product = Product::find($botProductid);
+            // dump($product);
+
+            $order->items()->create([
+                'name' => $product->name,
+                'income_price' => $product->income_price,
+                'price' => $product->price,
+                'tax' => 0,
+                'quantity' => 1,
+                'product_id' => $botProductid,
+                'category_name' => $product->category->name ?? 'kategoriyasiz',
+            ]);
+            // $total_price += $item->quantity * $item->price;
+            $income_price += 1 * $product->income_price;
+            $product->quantity = $product->quantity - 1;
+            $product->save();
+        
+
+        $order->total_price = $amount;
+        $order->income_price = $income_price;
+        $order->save();
+
+        // $this->cartItems = CartModel::where('user_id', auth()->user()->id)
+        //     ->delete();
+
+        $this->dispatch('checkout-completed');
+
+        return $order;
+        // redirect( url('/admin/orders/'. $order->id .'/edit') );
+        // redirect(url('/admin/pos'));
+        // redirect( url('/admin/pos') );
+
+    }
+
     public function checkoutandprint()
     {
 
