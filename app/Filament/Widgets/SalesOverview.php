@@ -20,7 +20,7 @@ class SalesOverview extends BaseWidget
         $totalcustomersLast30Days = Customer::where('created_at', '>=', Carbon::now()->subDays(30))->count();
 
         $formattedOrders = number_format($totalOrdersLast30Days, 0, ',', ' ');
-        $formattedIncome = $currency_symbol . number_format($totalIncomeLast30Days, 0, ',', ' ');
+        $formattedIncome = number_format($totalIncomeLast30Days, 0, ',', ' ') . $currency_symbol;
         $formattedCustomers = number_format($totalcustomersLast30Days, 0, ',', ' ');
 
         return [
