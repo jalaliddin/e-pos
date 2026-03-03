@@ -58,12 +58,12 @@ class BotController extends Controller
 
                 $product = Product::find($productId);
 
-                $text = "🛒 " . ($product?->name ?? 'Mahsulot') . " savatga qo'shildi.\n\nDo you want to add Product?";
+                $text = "🛒 " . ($product?->name ?? 'Mahsulot') . " savatga qo'shildi.\n\nYana qo'shishni xohlaysizmi?";
 
                 $buttons = [
                     [
-                        ['text' => "➕ Add Product", 'callback_data' => 'add_more'],
-                        ['text' => "✅ I selected", 'callback_data' => 'done_select'],
+                        ['text' => "➕ Yana qo'shish", 'callback_data' => 'add_more'],
+                        ['text' => "✅ Tanlandi", 'callback_data' => 'done_select'],
                     ],
                 ];
 
