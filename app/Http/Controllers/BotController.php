@@ -51,6 +51,10 @@ class BotController extends Controller
                 return $this->sendProducts($chatId, str_replace('cat_', '', $data));
             }
 
+            if ($data === 'back_to_categories') {
+                return $this->sendCategories($chatId);
+            }
+
             if (str_starts_with($data, 'prod_')) {
                 $productId = (int) str_replace('prod_', '', $data);
 
@@ -169,6 +173,11 @@ class BotController extends Controller
             return Telegram::sendMessage(['chat_id' => $chatId, 'text' => "Bu kategoriyada tovar yo'q."]);
         }
         $buttons = $products->map(fn($p) => [['text' => "📦 " . $p->name . ' - ' . $p->quantity . ' ta', 'callback_data' => 'prod_' . $p->id]])->toArray();
+
+        $buttons[] = [
+            ['text' => "⬅️ Kategoriyalarga qaytish", 'callback_data' => 'back_to_categories'],
+        ];
+
         return Telegram::sendMessage(['chat_id' => $chatId, 'text' => "Mahsulotni tanlang:", 'reply_markup' => json_encode(['inline_keyboard' => $buttons])]);
     }
 
