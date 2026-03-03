@@ -29,18 +29,18 @@ class SalesOverview extends BaseWidget
                     ->descriptionIcon('heroicon-o-inbox-stack', IconPosition::Before)
                     ->chart([1,5,10,50])
                     ->color('success'),
-
-            Stat::make('Kirimlar', $formattedIncome)
-                    ->description("Oxirgi 30 kun davomidagi kirimlar")
-                    ->descriptionIcon('heroicon-o-banknotes', IconPosition::Before)
-                    ->chart([1,5,30, 50])
-                    ->color('success'),
             
             Stat::make('Mijozlar soni', $formattedCustomers)
                     ->description("Oxirgi 30 kun davomidagi mijozlar")
                     ->descriptionIcon('heroicon-o-user-group', IconPosition::Before)
                     ->chart([1,5,15, 25])
-                    ->color('success'),       
+                    ->color('success'),   
+                    
+                    Stat::make('Kirimlar', $formattedIncome)
+                    ->description("Oxirgi 30 kun davomidagi kirimlar")
+                    ->descriptionIcon('heroicon-o-banknotes', IconPosition::Before)
+                    ->chart([1,5,30, 50])
+                    ->color('success')
         ];
     }
 }
