@@ -12,6 +12,7 @@ use Filament\Tables\Columns\Summarizers\Sum;
 use Filament\Tables\Columns\Summarizers\Summarizer;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 
 class OrderItemResource extends Resource
@@ -132,14 +133,33 @@ class OrderItemResource extends Resource
                     ->searchable(),
             ])
             ->filters([
-SelectFilter::make('category_name')
-    ->label('Kategoriya')
-    ->options(
-        \App\Models\OrderItem::query()
-            ->select('category_name')
-            ->distinct()
-            ->pluck('category_name', 'category_name')
-    ),
+                SelectFilter::make('category_name')
+                    ->label('Kategoriya')
+                    ->options(
+                        \App\Models\OrderItem::query()
+                            ->select('category_name')
+                            ->distinct()
+                            ->pluck('category_name', 'category_name')
+                    ),
+                Filter::make('created_at')
+                    ->label('Sana')
+                    ->form([
+                        Forms\Components\DatePicker::make('created_from')
+                            ->label('Dan'),
+                        Forms\Components\DatePicker::make('created_until')
+                            ->label('Gacha'),
+                    ])
+                    ->query(function ($query, array $data) {
+                        return $query
+                            ->when(
+                                $data['created_from'] ?? null,
+                                fn ($q, $date) => $q->whereDate('created_at', '>=', $date)
+                            )
+                            ->when(
+                                $data['created_until'] ?? null,
+                                fn ($q, $date) => $q->whereDate('created_at', '<=', $date)
+                            );
+                    }),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
