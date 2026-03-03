@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Livewire\Cart;
 use Telegram\Bot\Laravel\Facades\Telegram;
 use App\Models\Category;
+use Illuminate\Support\Facades\Cache;
 use App\Models\Customer;
 use App\Models\Product;
 use App\Models\TelegramSession;
@@ -30,7 +31,15 @@ class BotController extends Controller
 
         // 2. Start buyrug'i
         if ($update->has('message') && $update->getMessage()->getText() == '/start') {
-            $session->update(['step' => 'start', 'product_id' => null]);
+            $session->update([
+                'step' => 'start',
+                'product_id' => null,
+                'customer_name' => null,
+                'customer_phone' => null,
+            ]);
+
+            Cache::forget($this->selectedProductsCacheKey($chatId));
+
             return $this->sendCategories($chatId);
         }
 
@@ -43,8 +52,48 @@ class BotController extends Controller
             }
 
             if (str_starts_with($data, 'prod_')) {
-                $session->update(['product_id' => str_replace('prod_', '', $data), 'step' => 'wait_name']);
-                return Telegram::sendMessage(['chat_id' => $chatId, 'text' => "👤 Mijoz ismini yozing:"]);
+                $productId = (int) str_replace('prod_', '', $data);
+
+                $this->addProductToSelection($chatId, $productId);
+
+                $product = Product::find($productId);
+
+                $text = "🛒 " . ($product?->name ?? 'Mahsulot') . " savatga qo'shildi.\n\nDo you want to add Product?";
+
+                $buttons = [
+                    [
+                        ['text' => "➕ Add Product", 'callback_data' => 'add_more'],
+                        ['text' => "✅ I selected", 'callback_data' => 'done_select'],
+                    ],
+                ];
+
+                return Telegram::sendMessage([
+                    'chat_id' => $chatId,
+                    'text' => $text,
+                    'reply_markup' => json_encode(['inline_keyboard' => $buttons]),
+                ]);
+            }
+
+            if ($data === 'add_more') {
+                return $this->sendCategories($chatId);
+            }
+
+            if ($data === 'done_select') {
+                $selected = Cache::get($this->selectedProductsCacheKey($chatId), []);
+
+                if (empty($selected)) {
+                    return Telegram::sendMessage([
+                        'chat_id' => $chatId,
+                        'text' => "Avval mahsulot tanlang. /start buyrug'ini bosib qaytadan urinib ko'ring.",
+                    ]);
+                }
+
+                $session->update(['step' => 'wait_name']);
+
+                return Telegram::sendMessage([
+                    'chat_id' => $chatId,
+                    'text' => "👤 Mijoz ismini yozing:",
+                ]);
             }
         }
 
@@ -66,28 +115,33 @@ class BotController extends Controller
                         return Telegram::sendMessage(['chat_id' => $chatId, 'text' => "Iltimos, summani faqat raqamlarda kiriting!"]);
                     }
 
-                    // ASOSIY ORDER JADVALIGA SAQLASH
-                    // $order = Order::create([
-                    //     'product_id'     => $session->product_id,
-                    //     'customer_name'  => $session->customer_name,
-                    //     'customer_phone' => $session->customer_phone,
-                    //     'amount'         => $text,
-                    //     'status'         => 'completed'
-                    // ]);
-                    
-                    $staffIdentifier = "TG:" . $chatId;
-                    
+                    $selectedProducts = Cache::get($this->selectedProductsCacheKey($chatId), []);
+
+                    if (empty($selectedProducts)) {
+                        return Telegram::sendMessage([
+                            'chat_id' => $chatId,
+                            'text' => "Mahsulotlar tanlanmagan. /start buyrug'ini bosib qaytadan urinib ko'ring.",
+                        ]);
+                    }
+
                     $customer = Customer::create([
                         'first_name' => $session->customer_name,
                         'last_name' => $chatId,
-                        'phone' => $session->customer_phone
+                        'phone' => $session->customer_phone,
                     ]);
 
                     $orderCart = new Cart();
 
-                    $order = $orderCart->botCheckout($session->product_id, $customer->id, $text);
+                    $order = $orderCart->botCheckout($selectedProducts, $customer->id, $text);
 
-                    $session->update(['step' => 'start']); // Sessiyani tozalash
+                    Cache::forget($this->selectedProductsCacheKey($chatId));
+
+                    $session->update([
+                        'step' => 'start',
+                        'product_id' => null,
+                        'customer_name' => null,
+                        'customer_phone' => null,
+                    ]); // Sessiyani tozalash
 
                     Telegram::sendMessage([
                         'chat_id' => $chatId,
@@ -115,5 +169,20 @@ class BotController extends Controller
         }
         $buttons = $products->map(fn($p) => [['text' => "📦 " . $p->name . ' - ' . $p->quantity . ' ta', 'callback_data' => 'prod_' . $p->id]])->toArray();
         return Telegram::sendMessage(['chat_id' => $chatId, 'text' => "Mahsulotni tanlang:", 'reply_markup' => json_encode(['inline_keyboard' => $buttons])]);
+    }
+
+    private function selectedProductsCacheKey($chatId): string
+    {
+        return 'tg_selected_products_' . $chatId;
+    }
+
+    private function addProductToSelection($chatId, int $productId): void
+    {
+        $key = $this->selectedProductsCacheKey($chatId);
+        $selected = Cache::get($key, []);
+
+        $selected[] = $productId;
+
+        Cache::put($key, $selected, now()->addHours(2));
     }
 }

@@ -110,7 +110,7 @@ class Cart extends Component
 
     }
 
-    public function botCheckout($botProductid, $botCustomerid, $amount)  
+    public function botCheckout($botProductIds, $botCustomerId, $amount)  
     {
 
         $total_price = 0;
@@ -128,26 +128,41 @@ class Cart extends Component
         // }
 
         $order = Order::create([
-            'customer_id' => $botCustomerid,
+            'customer_id' => $botCustomerId,
             'total_price' => $total_price
         ]);
 
-            $product = Product::find($botProductid);
-            // dump($product);
+        if (! is_array($botProductIds)) {
+            $botProductIds = [$botProductIds];
+        }
+
+        $productCounts = [];
+
+        foreach ($botProductIds as $productId) {
+            $productCounts[$productId] = ($productCounts[$productId] ?? 0) + 1;
+        }
+
+        foreach ($productCounts as $productId => $quantity) {
+            $product = Product::find($productId);
+
+            if (! $product) {
+                continue;
+            }
 
             $order->items()->create([
                 'name' => $product->name,
                 'income_price' => $product->income_price,
                 'price' => $product->price,
                 'tax' => 0,
-                'quantity' => 1,
-                'product_id' => $botProductid,
+                'quantity' => $quantity,
+                'product_id' => $productId,
                 'category_name' => $product->category->name ?? 'kategoriyasiz',
             ]);
-            // $total_price += $item->quantity * $item->price;
-            $income_price += 1 * $product->income_price;
-            $product->quantity = $product->quantity - 1;
+
+            $income_price += $quantity * $product->income_price;
+            $product->quantity = max(0, $product->quantity - $quantity);
             $product->save();
+        }
         
 
         $order->total_price = $amount;
