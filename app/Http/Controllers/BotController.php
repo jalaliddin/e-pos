@@ -162,8 +162,9 @@ class BotController extends Controller
     private function sendProducts($chatId, $catId)
     {
         $products = Product::where('category_id', $catId)
-        ->where('quantity', '>', 0)
-        ->get();
+            ->where('quantity', '>', 0)
+            ->where('status', true)
+            ->get();
         if ($products->isEmpty()) {
             return Telegram::sendMessage(['chat_id' => $chatId, 'text' => "Bu kategoriyada tovar yo'q."]);
         }
