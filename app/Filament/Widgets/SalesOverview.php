@@ -19,20 +19,24 @@ class SalesOverview extends BaseWidget
         $totalIncomeLast30Days = Order::where('created_at', '>=', Carbon::now()->subDays(30))->sum('total_price');
         $totalcustomersLast30Days = Customer::where('created_at', '>=', Carbon::now()->subDays(30))->count();
 
+        $formattedOrders = number_format($totalOrdersLast30Days, 0, ',', ' ');
+        $formattedIncome = $currency_symbol . number_format($totalIncomeLast30Days, 0, ',', ' ');
+        $formattedCustomers = number_format($totalcustomersLast30Days, 0, ',', ' ');
+
         return [
-            Stat::make('Buyurtmalar soni', $totalOrdersLast30Days)
+            Stat::make('Buyurtmalar soni', $formattedOrders)
                     ->description("Oxirgi 30 kun davomida")
                     ->descriptionIcon('heroicon-o-inbox-stack', IconPosition::Before)
                     ->chart([1,5,10,50])
                     ->color('success'),
 
-            Stat::make('Kirimlar', $totalIncomeLast30Days )
+            Stat::make('Kirimlar', $formattedIncome)
                     ->description("Oxirgi 30 kun davomidagi kirimlar")
                     ->descriptionIcon('heroicon-o-banknotes', IconPosition::Before)
                     ->chart([1,5,30, 50])
                     ->color('success'),
             
-            Stat::make('Mijozlar soni', $totalcustomersLast30Days)
+            Stat::make('Mijozlar soni', $formattedCustomers)
                     ->description("Oxirgi 30 kun davomidagi mijozlar")
                     ->descriptionIcon('heroicon-o-user-group', IconPosition::Before)
                     ->chart([1,5,15, 25])
