@@ -23,12 +23,12 @@ class ProductTotals extends BaseWidget
         $totalPrice = (float) ($totals->total_price ?? 0);
 
         return [
-            Stat::make('Barcha mahsulotlar kirim narxi', $currencySymbol . number_format($totalIncomePrice, 0, ',', ' '))
+            Stat::make('Barcha mahsulotlar kirim narxi', number_format($totalIncomePrice, 0, ',', ' ') . $currencySymbol)
                 ->description('Faol mahsulotlar bo\'yicha jami kirim qiymati')
                 ->descriptionIcon('heroicon-o-banknotes', IconPosition::Before)
                 ->color('success'),
 
-            Stat::make('Barcha mahsulotlar umumiy narxi', $currencySymbol . number_format($totalPrice, 0, ',', ' '))
+            Stat::make('Barcha mahsulotlar umumiy narxi', number_format($totalPrice, 0, ',', ' ') . $currencySymbol)
                 ->description('Faol mahsulotlar bo\'yicha jami sotuv qiymati')
                 ->descriptionIcon('heroicon-o-chart-bar', IconPosition::Before)
                 ->color('primary'),

@@ -26,7 +26,7 @@ class SalesOverview extends BaseWidget
                     ->chart([1,5,10,50])
                     ->color('success'),
 
-            Stat::make('Kirimlar', $currency_symbol.$totalIncomeLast30Days)
+            Stat::make('Kirimlar', $totalIncomeLast30Days )
                     ->description("Oxirgi 30 kun davomidagi kirimlar")
                     ->descriptionIcon('heroicon-o-banknotes', IconPosition::Before)
                     ->chart([1,5,30, 50])
