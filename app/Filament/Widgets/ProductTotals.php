@@ -21,6 +21,7 @@ class ProductTotals extends BaseWidget
 
         $totalIncomePrice = (float) ($totals->total_income_price ?? 0);
         $totalPrice = (float) ($totals->total_price ?? 0);
+        $revenue = max(0, $totalPrice - $totalIncomePrice);
 
         return [
             Stat::make('Barcha mahsulotlar kirim narxi', number_format($totalIncomePrice, 0, ',', ' ') . $currencySymbol)
@@ -32,6 +33,11 @@ class ProductTotals extends BaseWidget
                 ->description('Faol mahsulotlar bo\'yicha jami sotuv qiymati')
                 ->descriptionIcon('heroicon-o-chart-bar', IconPosition::Before)
                 ->color('primary'),
+
+            Stat::make('Barcha mahsulotlar sof foyda', number_format($revenue, 0, ',', ' ') . $currencySymbol)
+                ->description('Umumiy sotuv va kirim orasidagi farq')
+                ->descriptionIcon('heroicon-o-arrow-trending-up', IconPosition::Before)
+                ->color('warning'),
         ];
     }
 }
