@@ -99,13 +99,18 @@ class ProductResource extends Resource
                     ->sortable()
                     ->width(10)
                     ->rules(['required', 'integer', 'min:1']),
-                TextColumn::make('price')->sortable(),
-                TextColumn::make('category.name')
-                    ->label('Category')
-                    ->sortable(),
-                TextColumn::make('created_at')->dateTime()->sortable(),
+                TextColumn::make('income_price')
+                    ->label('Kelish narxi')
+                    ->sortable()
+                    ->formatStateUsing(fn ($record) => $currency_symbol.number_format($record->income_price, 0, ',', ' '))
+                    ->summarize(
+                        Sum::make()
+                            ->label('Jami')
+                            ->query(fn ($query) => $query)
+                            ->formatStateUsing(fn ($state) => $currency_symbol.number_format($state, 0, ',', ' '))
+                    ),
                 TextColumn::make('price')
-                    ->label('Umumiy narxi')
+                    ->label('Sotuv narxi')
                     ->sortable()
                     ->formatStateUsing(fn ($record) => $currency_symbol.number_format($record->price, 0, ',', ' '))
                     ->summarize(
@@ -114,6 +119,22 @@ class ProductResource extends Resource
                             ->query(fn ($query) => $query)
                             ->formatStateUsing(fn ($state) => $currency_symbol.number_format($state, 0, ',', ' '))
                     ),
+                TextColumn::make('profit')
+                    ->label('Foyda')
+                    ->sortable()
+                    ->getStateUsing(fn ($record) => $record->price - $record->income_price)
+                    ->formatStateUsing(fn ($state) => $currency_symbol.number_format($state, 0, ',', ' '))
+                    ->color(fn ($state) => $state >= 0 ? 'success' : 'danger')
+                    ->summarize(
+                        \Filament\Tables\Columns\Summarizers\Summarizer::make()
+                            ->label('Jami')
+                            ->using(fn ($query) => $query->selectRaw('SUM(price - income_price) as aggregate')->value('aggregate'))
+                            ->formatStateUsing(fn ($state) => $currency_symbol.number_format($state ?? 0, 0, ',', ' '))
+                    ),
+                TextColumn::make('category.name')
+                    ->label('Category')
+                    ->sortable(),
+                TextColumn::make('created_at')->dateTime()->sortable(),
             ])
             ->filters([
                 SelectFilter::make('category_id')
