@@ -67,8 +67,24 @@
 
     {{-- Pagination --}}
     @if ($products->hasPages())
-    <div class="mt-3">
-        {{ $products->links('livewire::tailwind') }}
+    <div class="mt-3 flex items-center justify-between gap-2">
+        <button
+            wire:click="previousPage('product_page')"
+            @if($products->onFirstPage()) disabled @endif
+            class="flex-1 py-1.5 text-sm rounded-lg border transition-colors
+                {{ $products->onFirstPage() ? 'border-gray-200 text-gray-300 dark:border-gray-700 dark:text-gray-600 cursor-not-allowed' : 'border-gray-300 text-gray-600 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700' }}">
+            ← Oldingi
+        </button>
+        <span class="text-xs text-gray-400 shrink-0">
+            {{ $products->currentPage() }} / {{ $products->lastPage() }}
+        </span>
+        <button
+            wire:click="nextPage('product_page')"
+            @if(!$products->hasMorePages()) disabled @endif
+            class="flex-1 py-1.5 text-sm rounded-lg border transition-colors
+                {{ !$products->hasMorePages() ? 'border-gray-200 text-gray-300 dark:border-gray-700 dark:text-gray-600 cursor-not-allowed' : 'border-gray-300 text-gray-600 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700' }}">
+            Keyingi →
+        </button>
     </div>
     @endif
 </div>
