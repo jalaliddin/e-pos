@@ -7,11 +7,11 @@
         <table class="min-w-[600px] min-w-full border border-gray-300">
             <thead>
                 <tr class="bg-gray-200">
-                    <th class="px-2 py-1 border border-gray-400 text-left w-3/5 dark:text-gray-800">Item</th>
-                    <th class="px-2 py-1 border border-gray-400 text-center w-1/6 dark:text-gray-800">Rate</th>
-                    <th class="px-2 py-1 border border-gray-400 text-center w-1/6 dark:text-gray-800">Tax(%)</th>
-                    <th class="px-2 py-1 border border-gray-400 text-center w-1/6 dark:text-gray-800">Quantity</th>
-                    <th class="px-2 py-1 border border-gray-400 text-center w-1/6 dark:text-gray-800">Total</th>
+                    <th class="px-2 py-1 border border-gray-400 text-left w-3/5 dark:text-gray-100">Item</th>
+                    <th class="px-2 py-1 border border-gray-400 text-center w-1/6 dark:text-gray-100">Rate</th>
+                    <th class="px-2 py-1 border border-gray-400 text-center w-1/6 dark:text-gray-100">Tax(%)</th>
+                    <th class="px-2 py-1 border border-gray-400 text-center w-1/6 dark:text-gray-100">Quantity</th>
+                    <th class="px-2 py-1 border border-gray-400 text-center w-1/6 dark:text-gray-100">Total</th>
                 </tr>
             </thead>
             <tbody>

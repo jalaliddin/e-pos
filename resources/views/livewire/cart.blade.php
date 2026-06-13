@@ -7,11 +7,11 @@
         <table class="min-w-[600px] min-w-full border border-gray-300">
             <thead>
                 <tr class="bg-gray-200">
-                    <th class="px-2 py-2 border border-gray-400 text-left w-3/5 dark:text-gray-800">Mahsulot</th>
-                    <th class="px-2 py-2 border border-gray-400 text-center w-1/6 dark:text-gray-800">Qiymati</th>
-                    <th class="px-2 py-2 border border-gray-400 text-center w-1/6 dark:text-gray-800">QQS(%)</th>
-                    <th class="px-2 py-2 border border-gray-400 text-center w-1/6 dark:text-gray-800">Soni</th>
-                    <th class="px-2 py-2 border border-gray-400 text-center w-1/6 dark:text-gray-800">Umumiy</th>
+                    <th class="px-2 py-2 border border-gray-400 text-left w-3/5 dark:text-gray-100">Mahsulot</th>
+                    <th class="px-2 py-2 border border-gray-400 text-center w-1/6 dark:text-gray-100">Qiymati</th>
+                    <th class="px-2 py-2 border border-gray-400 text-center w-1/6 dark:text-gray-100">QQS(%)</th>
+                    <th class="px-2 py-2 border border-gray-400 text-center w-1/6 dark:text-gray-100">Soni</th>
+                    <th class="px-2 py-2 border border-gray-400 text-center w-1/6 dark:text-gray-100">Umumiy</th>
                 </tr>
             </thead>
             <tbody>
