@@ -7,7 +7,9 @@
       "Bash(php -l /home/eversoft/Projects/prosavdo.uz/pos/e-pos/app/Filament/Pages/Reports.php)",
       "Bash(php -l /home/eversoft/Projects/prosavdo.uz/pos/e-pos/app/Filament/Widgets/SalesOverview.php)",
       "Bash(git checkout *)",
-      "Bash(php artisan *)"
+      "Bash(php artisan *)",
+      "Bash(grep -n 'defaultSimpleView\\\\|defaultView\\\\|$defaultSimpleView\\\\|$defaultView' /home/eversoft/Projects/prosavdo.uz/pos/e-pos/vendor/laravel/framework/src/Illuminate/Pagination/AbstractPaginator.php)",
+      "Bash(grep -n 'defaultSimpleView\\\\|defaultView\\\\|$defaultSimpleView\\\\|$defaultView' /home/eversoft/Projects/prosavdo.uz/pos/e-pos/vendor/laravel/framework/src/Illuminate/Pagination/AbstractCursorPaginator.php)"
     ]
   }
 }

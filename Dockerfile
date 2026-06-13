@@ -25,4 +25,4 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
 EXPOSE 9000
-CMD ["php-fpm"]
+CMD ["sh", "-c", "php artisan view:clear && php artisan config:clear && php artisan cache:clear && php-fpm"]
