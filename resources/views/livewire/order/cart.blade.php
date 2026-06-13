@@ -1,4 +1,9 @@
 <div class="">
+<style>
+    html.dark .pos-cart-row { background-color: #1f2937 !important; border-bottom-color: #374151 !important; }
+    html.dark .pos-cart-row td { color: #f1f5f9 !important; border-color: #374151 !important; }
+    html.dark .pos-cart-row input { color: #f1f5f9 !important; background-color: #374151 !important; border-color: #4b5563 !important; }
+</style>
 
     @if (session()->has('error'))
         <p class="text-red-500">{{ session('error') }}</p>

@@ -10,7 +10,12 @@
       "Bash(php artisan *)",
       "Bash(grep -n 'defaultSimpleView\\\\|defaultView\\\\|$defaultSimpleView\\\\|$defaultView' /home/eversoft/Projects/prosavdo.uz/pos/e-pos/vendor/laravel/framework/src/Illuminate/Pagination/AbstractPaginator.php)",
       "Bash(grep -n 'defaultSimpleView\\\\|defaultView\\\\|$defaultSimpleView\\\\|$defaultView' /home/eversoft/Projects/prosavdo.uz/pos/e-pos/vendor/laravel/framework/src/Illuminate/Pagination/AbstractCursorPaginator.php)",
-      "Bash(php -l /home/eversoft/Projects/prosavdo.uz/pos/e-pos/app/Filament/Widgets/SalesLineChart.php)"
+      "Bash(php -l /home/eversoft/Projects/prosavdo.uz/pos/e-pos/app/Filament/Widgets/SalesLineChart.php)",
+      "Bash(sed -i 's/class=\"relative bg-white border border-gray-300 rounded overflow-hidden/class=\"relative bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded overflow-hidden/g' /home/eversoft/Projects/prosavdo.uz/pos/e-pos/resources/views/livewire/product-search.blade.php)",
+      "Bash(sed -i 's/class=\"text-gray-600 p-2 text-sm\"/class=\"text-gray-700 dark:text-gray-200 p-2 text-sm\"/g' /home/eversoft/Projects/prosavdo.uz/pos/e-pos/resources/views/livewire/product-search.blade.php)",
+      "Bash(sed -i 's/class=\"text-gray-600 p-2 pt-0 text-md\"/class=\"text-gray-700 dark:text-gray-200 p-2 pt-0 text-md font-medium\"/g' /home/eversoft/Projects/prosavdo.uz/pos/e-pos/resources/views/livewire/product-search.blade.php)",
+      "Bash(sed -i 's/class=\"bg-gray-200\"/class=\"bg-gray-200 dark:bg-gray-700\"/g' /home/eversoft/Projects/prosavdo.uz/pos/e-pos/resources/views/livewire/cart.blade.php)",
+      "Bash(sed -i 's/class=\"min-w-\\\\[600px\\\\] min-w-full border border-gray-300\"/class=\"min-w-[600px] min-w-full border border-gray-300 dark:border-gray-600\"/g' /home/eversoft/Projects/prosavdo.uz/pos/e-pos/resources/views/livewire/cart.blade.php)"
     ]
   }
 }

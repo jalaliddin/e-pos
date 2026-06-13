@@ -1,12 +1,17 @@
 <div class="">
+<style>
+    html.dark .pos-cart-row { background-color: #1f2937 !important; border-bottom-color: #374151 !important; }
+    html.dark .pos-cart-row td { color: #f1f5f9 !important; border-color: #374151 !important; }
+    html.dark .pos-cart-row input { color: #f1f5f9 !important; background-color: #374151 !important; border-color: #4b5563 !important; }
+</style>
 
     @if (session()->has('error'))
         <p class="text-red-500">{{ session('error') }}</p>
     @endif
     <div class="overflow-x-auto md:overflow-x-none">
-        <table class="min-w-[600px] min-w-full border border-gray-300">
+        <table class="min-w-[600px] min-w-full border border-gray-300 dark:border-gray-600">
             <thead>
-                <tr class="bg-gray-200">
+                <tr class="bg-gray-200 dark:bg-gray-700">
                     <th class="px-2 py-2 border border-gray-400 text-left w-3/5 dark:text-gray-100">Mahsulot</th>
                     <th class="px-2 py-2 border border-gray-400 text-center w-1/6 dark:text-gray-100">Qiymati</th>
                     <th class="px-2 py-2 border border-gray-400 text-center w-1/6 dark:text-gray-100">QQS(%)</th>
@@ -38,20 +43,20 @@
                 @endforeach
                 
                 <tr class="border-gray-400 border">
-                    <td colspan="3" class="px-4 py-2 border-r text-right font-semibold">QQS siz</td>
-                    <td colspan="2" class="px-4 py-2 text-center font-semibold">{{ $currency_symbol }}{{ number_format($total_price, 2) }}</td>
+                    <td colspan="3" class="px-4 py-2 border-r text-right font-semibold dark:text-gray-200">QQS siz</td>
+                    <td colspan="2" class="px-4 py-2 text-center font-semibold dark:text-gray-200">{{ $currency_symbol }}{{ number_format($total_price, 2) }}</td>
                 </tr>
 
                 @foreach ($total_tax as $rate => $amount)
                     <tr class="border-gray-400 border">
-                        <td colspan="3" class="px-4 py-2 border-r text-right font-semibold">QQS @ {{ $rate }}%</td>
-                        <td colspan="2" class="px-4 py-2 text-center font-semibold">{{ $currency_symbol }}{{ number_format($amount, 2) }}</td>
+                        <td colspan="3" class="px-4 py-2 border-r text-right font-semibold dark:text-gray-200">QQS @ {{ $rate }}%</td>
+                        <td colspan="2" class="px-4 py-2 text-center font-semibold dark:text-gray-200">{{ $currency_symbol }}{{ number_format($amount, 2) }}</td>
                     </tr>
                 @endforeach
 
                 <tr class="bg-gray border-gray-400 border">
-                    <td colspan="3" class="px-4 py-2 border-r text-right font-bold">Umumiy</td>
-                    <td colspan="2" class="px-4 py-2 text-center font-bold">{{ $currency_symbol }}{{ number_format($grand_total, 2) }}</td>
+                    <td colspan="3" class="px-4 py-2 border-r text-right font-bold dark:text-white">Umumiy</td>
+                    <td colspan="2" class="px-4 py-2 text-center font-bold dark:text-white">{{ $currency_symbol }}{{ number_format($grand_total, 2) }}</td>
                 </tr>
  
             @endif
