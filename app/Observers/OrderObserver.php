@@ -17,12 +17,17 @@ class OrderObserver
         $message .= "🆔 *Buyurtma ID:* {$order->id}\n";
         $message .= "---------------------------\n";
         foreach ($order->items as $item) {
-
             $product = Product::find($item->product_id);
-            // $product = Product::find($item->product_id);
-            // Har bir mahsulot nomi, miqdori va narxini qo'shamiz
-            $productName = $product->name; // Agar OrderItem'da product bog'lanishi bo'lsa
-            $message .= "🔹 {$productName} — {$item->quantity} dona x " . number_format($item->price) . " so'm\n";
+            $productName = $product ? $product->name : $item->name;
+            $standardPrice = $product ? $product->price : null;
+
+            $line = "🔹 {$productName} — {$item->quantity} dona x " . number_format($item->price) . " so'm";
+
+            if ($standardPrice !== null && (float)$item->price !== (float)$standardPrice) {
+                $line .= "\n   ⚠️ _Narx o'zgartirildi:_ " . number_format($standardPrice) . " → " . number_format($item->price) . " so'm";
+            }
+
+            $message .= $line . "\n";
         }
         $message .= "---------------------------\n";
         $message .= "👤 *Mijoz:* {$order->customer->first_name} {$order->customer->phone}\n";

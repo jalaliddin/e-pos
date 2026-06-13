@@ -6,7 +6,8 @@
       "Bash(php -r \"echo PHP_VERSION;\")",
       "Bash(php -l /home/eversoft/Projects/prosavdo.uz/pos/e-pos/app/Filament/Pages/Reports.php)",
       "Bash(php -l /home/eversoft/Projects/prosavdo.uz/pos/e-pos/app/Filament/Widgets/SalesOverview.php)",
-      "Bash(git checkout *)"
+      "Bash(git checkout *)",
+      "Bash(php artisan *)"
     ]
   }
 }

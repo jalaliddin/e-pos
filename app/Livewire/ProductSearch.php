@@ -6,7 +6,6 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Product;
 use App\Models\Category;
-use App\Models\Setting;
 use App\Models\Cart;
 use Livewire\Attributes\On;
 
@@ -42,7 +41,7 @@ class ProductSearch extends Component
         $products = Product::query()
             ->when($this->query, fn($q) => $q->where('name', 'like', '%' . $this->query . '%'))
             ->when($this->selectedCategory, fn($q) => $q->where('category_id', $this->selectedCategory))
-            ->paginate(12);
+            ->paginate(12, ['*'], 'product_page');
 
         return view('livewire.product-search', compact('currency_symbol', 'categories', 'products'));
     }

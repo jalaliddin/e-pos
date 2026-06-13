@@ -68,7 +68,7 @@
     {{-- Pagination --}}
     @if ($products->hasPages())
     <div class="mt-3">
-        {{ $products->links('livewire::simple-tailwind') }}
+        {{ $products->links('livewire::tailwind') }}
     </div>
     @endif
 </div>
