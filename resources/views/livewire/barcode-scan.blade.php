@@ -5,7 +5,7 @@
                 if (document.activeElement !== $refs.barcodeInput) {
                     $refs.barcodeInput.focus();
                 }
-            }, 5000);">
+            }, 15000);">
 
     <input 
         x-ref="barcodeInput"
